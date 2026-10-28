@@ -1,5 +1,5 @@
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-const listElement = document.getElementById("book-list");
+const animationListElement = document.getElementById("book-list");
 
 const markVisibleCards = () => {
   const cards = [...document.querySelectorAll(".book-card")];
@@ -28,9 +28,9 @@ const markVisibleCards = () => {
 };
 
 const pulseFilterUpdate = () => {
-  if (prefersReducedMotion || !listElement) return;
-  listElement.classList.add("is-filtering");
-  window.setTimeout(() => listElement.classList.remove("is-filtering"), 260);
+  if (prefersReducedMotion || !animationListElement) return;
+  animationListElement.classList.add("is-filtering");
+  window.setTimeout(() => animationListElement.classList.remove("is-filtering"), 260);
 };
 
 window.addEventListener("DOMContentLoaded", () => {
