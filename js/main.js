@@ -162,7 +162,7 @@ const renderBooks = (items) => {
 
     const link = document.createElement("a");
     link.className = "book-link";
-    link.href = `../${encodeURI(book.file)}`;
+    link.href = `./_uploads/${encodeURI(book.file)}`;
     link.target = "_blank";
     link.rel = "noreferrer noopener";
     link.textContent = "Abrir/baixar livro (PDF)";
