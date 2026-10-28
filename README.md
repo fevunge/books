@@ -18,6 +18,10 @@ livro, segue estes passos:
 5. Confirma que o livro aparece no catálogo e que o link abre o PDF.
 6. Cria o PR com uma breve descrição da alteração.
 
+Para actualizar um livro, substitui o PDF em `_uploads/` mantendo exactamente o
+mesmo nome. Se também for necessário mudar o nome do ficheiro, actualiza o nome
+nas três localizações: `_uploads/`, `books.json` e `js/main.js`.
+
 ### Exemplo
 
 Se o ficheiro for:
