@@ -1,46 +1,4 @@
-const BOOK_FILES = [
-  "Addison.Wesley.PostgreSQL.Introduction.And.Concepts.Dec.2000.ISBN.0201703319.pdf",
-  "Addison.Wesley.Python.Mar.2015.ISBN.0134034287.pdf",
-  "Adnan Aziz, Tsung-Hsien Lee, Amit Prakash-Elements of Programming Interviews_ The Insiders’ Guide (2015).pdf",
-  "advanced-linux-programming.pdf",
-  "Advanced.Programming.in.the.UNIX.Environment.3rd.Edition.0321637739.pdf",
-  "Advanced_Operating_Systems.pdf",
-  "An Introduction to Parallel Programming.pdf",
-  "Beginning_Linux_Programming_4e.pdf",
-  "clean-architectures-in-python.pdf",
-  "Computer_Systems-A_Programmers_Perspective-2e.pdf",
-  "Cra.Th.C.C++ An.Ja.Int.pdf",
-  "Design Patterns, Elements of Reusable Object-Oriented Software.pdf",
-  "Designing Data Intensive Applications.pdf",
-  "Distributed Systems Principles and Paradigms.pdf",
-  "Expert C Programming - Deep C Secrets.pdf",
-  "How.Linux.Works.What.Every.Superuser.Should.Know.2nd.Edition.PDF.pdf",
-  "Linux Kernel Development - 3rd Edition.pdf",
-  "Linux System Programming - Robert Love.pdf",
-  "linux system programming talking directly to the kernel and c library.pdf",
-  "Michal Jaworski, Tarek Ziade - Expert Python Programming, Second Edition - 2016.pdf",
-  "Modern Operating Systems - 4th Edition.pdf",
-  "Operating System Concepts - 9th Edition.pdf",
-  "Parallel Programming with Python [Palach 2014-07-14].pdf",
-  "pointers-on-c-kenneth-reek-pdf-free.pdf",
-  "Practical File System Design - The Be Filesystem.pdf",
-  "ptyhon-network-engginering-english-version.pdf",
-  "Python Essential Reference, Fourth Edition (2009).pdf",
-  "python parallel programming.pdf",
-  "tanenbaum_woodhull_operating-systems-design-implementation-3rd-edition.pdf",
-  "The Docker Book - James Turnbull.pdf",
-  "The Hacker's Guide to Python - Julien Danjou.pdf",
-  "The Linux Programming Interface-Michael Kerrisk.pdf",
-  "the-protocols-tcp-ip-illustrated-volume-1.9780201633467.24290.pdf",
-  "The_Art_of_Multiprocessor_Programming.pdf",
-  "the_c_programming_language_2.pdf",
-  "Theartofmulticore.pdf",
-  "UnderstandingTheLinuxKernel3rdEdition.pdf",
-  "UNIX Network Programming, Volume 1, Third Edition, The Sockets Networking API.pdf",
-  "unix-linux-system-administration-handbook-5th.pdf",
-  "VMware_paravirtualization.pdf",
-  "W. Richard Stevens - Unix Network Programming Vol2.pdf"
-];
+let books = [];
 
 const DESCRIPTION_PLACEHOLDER = "lorem ipsum dolour sit amet...";
 
@@ -93,7 +51,7 @@ const iconForTags = (tags) => {
   return ICONS.generic;
 };
 
-const books = BOOK_FILES.map((file) => {
+const buildBooks = (bookFiles) => bookFiles.map((file) => {
   const tags = inferTags(file);
   const title = prettifyTitle(file);
   return {
@@ -213,6 +171,24 @@ const filterBooks = () => {
   document.dispatchEvent(new CustomEvent("catalog:updated"));
 };
 
+const loadBooks = async () => {
+  try {
+    const response = await fetch("./books.json");
+    if (!response.ok) throw new Error(`Falha ao carregar books.json: ${response.status}`);
+
+    const data = await response.json();
+    if (!Array.isArray(data.BOOK_FILES)) throw new Error("BOOK_FILES inválido em books.json");
+
+    books = buildBooks(data.BOOK_FILES);
+    filterBooks();
+  } catch (error) {
+    listElement.innerHTML = "";
+    noResultsElement.hidden = false;
+    noResultsElement.textContent = "Não foi possível carregar o catálogo de livros.";
+    statusElement.textContent = "Erro ao carregar books.json.";
+    console.error(error);
+  }
+};
+
 searchElement.addEventListener("input", filterBooks);
-renderBooks(books);
-updateStatus(books.length, "");
+loadBooks();
