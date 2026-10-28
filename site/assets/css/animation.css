@@ -1,0 +1,62 @@
+body {
+  opacity: 0;
+}
+
+body.is-ready {
+  opacity: 1;
+  transition: opacity 350ms ease;
+}
+
+.book-card {
+  transform: translateY(10px);
+  opacity: 0;
+  transition: transform 300ms ease, opacity 300ms ease, box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.book-card.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.book-card:hover,
+.book-card:focus-within {
+  border-color: var(--secondary);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(194, 157, 241, 0.35);
+  transform: translateY(-3px);
+}
+
+.book-grid.is-filtering .book-card {
+  animation: pulse-update 280ms ease;
+}
+
+@keyframes pulse-update {
+  0% {
+    filter: brightness(0.95);
+  }
+  50% {
+    filter: brightness(1.08);
+  }
+  100% {
+    filter: brightness(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  body {
+    opacity: 1;
+  }
+
+  .book-card {
+    transform: none;
+    opacity: 1;
+  }
+}
