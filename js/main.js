@@ -7,6 +7,7 @@ const BOOK_FILES = [
   "Advanced_Operating_Systems.pdf",
   "An Introduction to Parallel Programming.pdf",
   "Beginning_Linux_Programming_4e.pdf",
+  "Bentley_BumperSticker.pdf",
   "clean-architectures-in-python.pdf",
   "Computer_Systems-A_Programmers_Perspective-2e.pdf",
   "Cra.Th.C.C++ An.Ja.Int.pdf",
